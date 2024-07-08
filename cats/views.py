@@ -1,3 +1,5 @@
+from django_filters.rest_framework import DjangoFilterBackend
+
 from rest_framework import viewsets
 from rest_framework.throttling import AnonRateThrottle, ScopedRateThrottle
 from rest_framework.pagination import PageNumberPagination
@@ -14,9 +16,12 @@ class CatViewSet(viewsets.ModelViewSet):
     serializer_class = CatSerializer
     permission_classes = (OwnerOrReadOnly,)
     # throttle_classes = (AnonRateThrottle,)
-    throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
-    throttle_scope = 'low_request'
-    pagination_class = CatPagination
+    # throttle_classes = (WorkingHoursRateThrottle, ScopedRateThrottle)
+    # throttle_scope = 'low_request'
+    # pagination_class = CatPagination
+    filter_backends = (DjangoFilterBackend,)
+    pagination_class = None
+    filterset_fields = ('color', 'birth_year')
 
     # def get_permissions(self):
     #     if self.action == 'retrieve':
